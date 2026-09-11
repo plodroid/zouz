@@ -201,7 +201,17 @@
     $('#lessonMeaning').textContent = lesson.meaning;
     $('#lessonWhy').textContent = lesson.why;
     $('#lessonSteps').innerHTML = lesson.steps.map(step => `<li>${step}</li>`).join('');
-    $('#workedExample').innerHTML = `<div class="example-title">${lesson.example.title}</div>${lesson.example.lines.map(([eq, note]) => `<div class="equation-line">${eq}</div><div class="equation-note">${note}</div>`).join('')}`;
+    $('#workedExample').innerHTML =
+      `<div class="example-title">${lesson.example.title}</div>` +
+      lesson.example.steps.map(step => `
+        <section class="example-step">
+          <h5>${step.title}</h5>
+          <p class="example-why">${step.why}</p>
+          <div class="example-working">
+            ${step.working.map(line => `<div class="equation-line">${line}</div>`).join('')}
+          </div>
+        </section>
+      `).join('');
     $('#lessonMistake').textContent = lesson.mistake;
     $('#miniQuestion').textContent = lesson.mini.question;
     $('#miniAnswer').value = '';
