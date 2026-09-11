@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f5f7">
+  <meta name="description" content="Zouz makes GCSE Maths easier to understand with clear lessons, adaptive practice, quizzes, and progress tracking.">
+  <title>Zouz — GCSE study that actually explains itself</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <filter id="liquidGoo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -8" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <header class="site-nav">
+    <nav class="nav-shell" aria-label="Main navigation">
+      <div class="nav-tabs" id="desktopTabs" data-liquid-tabs>
+        <a class="active" href="#home">Home</a>
+        <a href="#learn">Learn</a>
+        <a href="#practice">Practice</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#progress">Progress</a>
+      </div>
+      <button class="icon-btn" id="searchOpen" type="button" aria-label="Search lessons" title="Search (Ctrl/⌘ K)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 20-4.2-4.2m1.7-5.3a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+      </button>
+      <button class="icon-btn" id="settingsOpen" type="button" aria-label="Appearance settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="home">
+      <div class="wrap hero-copy">
+        <p class="eyebrow reveal">AQA GCSE 9–1 · Maths first track</p>
+        <h1 class="reveal" data-delay="1">Finish school.<br><span>Actually understand it.</span></h1>
+        <p class="lead reveal" data-delay="2">Zouz turns GCSE Maths into clear steps, proper practice, and progress you can see — built for people who are done with explanations that skip the important bit.</p>
+        <div class="hero-actions reveal" data-delay="3">
+          <button class="btn btn-primary" type="button" data-go="#learn" id="continueHero">Start learning</button>
+          <button class="btn btn-plain" type="button" data-go="#quiz">Test yourself</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section home-dashboard" aria-labelledby="todayTitle">
+      <div class="wrap">
+        <div class="section-head reveal compact-head">
+          <p class="eyebrow">YOUR NEXT MOVE</p>
+          <h2 id="todayTitle">Know what to do next.</h2>
+          <p>No fake dashboard numbers. Everything here comes from what you actually complete, practise, and answer.</p>
+        </div>
+
+        <div class="dashboard-grid stagger">
+          <article class="next-card interactive-card" id="nextLessonCard">
+            <div>
+              <p class="card-kicker">Continue learning</p>
+              <h3 id="nextLessonTitle">Solving linear equations</h3>
+              <p id="nextLessonMeta">Maths · Algebra · 8 min</p>
+            </div>
+            <button class="round-action" type="button" id="nextLessonButton" aria-label="Open recommended lesson">→</button>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Curriculum</span>
+            <strong id="homeCompletion">0%</strong>
+            <div class="progress-track" aria-hidden="true"><span id="homeCompletionBar"></span></div>
+            <small id="homeCompletionDetail">0 of 3 lessons complete</small>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Mastery</span>
+            <strong id="homeMastery">0%</strong>
+            <small id="homeMasteryDetail">Answer practice questions to build mastery</small>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Level</span>
+            <strong id="homeLevel">1</strong>
+            <small><span id="homeXP">0</span> XP earned from real study activity</small>
+          </article>
+        </div>
+
+        <div class="mode-grid stagger" aria-label="Study modes">
+          <button class="mode-card interactive-card" type="button" data-go="#learn">
+            <span class="mode-number">01</span>
+            <div><h3>Learn</h3><p>Understand the idea first, with every step shown.</p></div>
+            <span class="mode-arrow">↗</span>
+          </button>
+          <button class="mode-card interactive-card" type="button" data-go="#practice">
+            <span class="mode-number">02</span>
+            <div><h3>Practice</h3><p>Train one skill until it stops feeling random.</p></div>
+            <span class="mode-arrow">↗</span>
+          </button>
+          <button class="mode-card interactive-card" type="button" data-go="#quiz">
+            <span class="mode-number">03</span>
+            <div><h3>Quiz</h3><p>20–50 fresh questions, normal or Perfect Run.</p></div>
+            <span class="mode-arrow">↗</span>
+          </button>
+          <button class="mode-card interactive-card" type="button" data-go="#progress">
+            <span class="mode-number">04</span>
+            <div><h3>Progress</h3><p>See completed lessons, weak areas, results, and mistakes.</p></div>
+            <span class="mode-arrow">↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="learn" aria-labelledby="learnTitle">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">LEARNER</p>
+          <h2 id="learnTitle">Learn the bit textbooks skip.</h2>
+          <p>This first complete track covers AQA-style GCSE Maths algebra fundamentals. Each lesson explains the reason behind the method, then makes you use it.</p>
+        </div>
+
+        <div class="track-header reveal">
+          <div>
+            <span class="track-label">Maths → Algebra</span>
+            <h3>Linear equations</h3>
+          </div>
+          <div class="track-progress" aria-label="Lesson track progress">
+            <span id="trackProgressText">0 / 3 complete</span>
+            <div class="progress-track"><span id="trackProgressBar"></span></div>
+          </div>
+        </div>
+
+        <div class="lesson-layout">
+          <aside class="lesson-list reveal" id="lessonList" aria-label="Algebra lessons"></aside>
+
+          <article class="lesson-view reveal" id="lessonView" tabindex="-1">
+            <div class="lesson-topline">
+              <div>
+                <p class="card-kicker" id="lessonBreadcrumb">Maths · Algebra</p>
+                <h3 id="lessonTitle">Solving linear equations</h3>
+              </div>
+              <button class="bookmark-btn" type="button" id="bookmarkLesson" aria-pressed="false">Save</button>
+            </div>
+
+            <p class="lesson-intro" id="lessonIntro"></p>
+
+            <div class="lesson-block">
+              <h4>What this actually means</h4>
+              <p id="lessonMeaning"></p>
+            </div>
+
+            <div class="lesson-block reason-block">
+              <span class="tiny-label">WHY DOES THIS WORK?</span>
+              <p id="lessonWhy"></p>
+            </div>
+
+            <div class="lesson-block">
+              <h4>The method</h4>
+              <ol class="step-list" id="lessonSteps"></ol>
+            </div>
+
+            <div class="worked-example" id="workedExample"></div>
+
+            <div class="lesson-block mistake-callout">
+              <h4>Common mistake</h4>
+              <p id="lessonMistake"></p>
+            </div>
+
+            <div class="mini-check" id="miniCheck">
+              <div class="mini-check-head">
+                <div><span class="tiny-label">QUICK CHECK</span><h4 id="miniQuestion"></h4></div>
+                <span class="mark-chip">1 mark</span>
+              </div>
+              <div class="answer-row">
+                <label class="sr-only" for="miniAnswer">Your answer</label>
+                <input id="miniAnswer" type="text" inputmode="decimal" autocomplete="off" placeholder="Your answer">
+                <button class="btn btn-primary small-btn" id="miniSubmit" type="button">Check</button>
+              </div>
+              <div class="feedback" id="miniFeedback" role="status" aria-live="polite"></div>
+            </div>
+
+            <div class="lesson-actions">
+              <button class="btn btn-plain" type="button" id="reviewLater">Review later</button>
+              <button class="btn btn-plain" type="button" id="practiceLesson">Practice this</button>
+              <button class="btn btn-primary" type="button" id="completeLesson">Mark complete</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt-section" id="practice" aria-labelledby="practiceTitle">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">PRACTICE</p>
+          <h2 id="practiceTitle">Train one skill. Watch it click.</h2>
+          <p>Practice adapts without punishing you. Get a few right and it steps up; struggle and it backs off, explains the idea again, then gives you another go.</p>
+        </div>
+
+        <div class="practice-shell reveal">
+          <div class="practice-toolbar">
+            <div>
+              <span class="tiny-label">TOPIC</span>
+              <strong id="practiceTopicLabel">Solving linear equations</strong>
+            </div>
+            <div class="segmented compact-segmented" id="practiceDifficulty" data-liquid-tabs aria-label="Practice difficulty">
+              <button class="active" type="button" data-value="auto">Auto</button>
+              <button type="button" data-value="easy">Easy</button>
+              <button type="button" data-value="medium">Medium</button>
+              <button type="button" data-value="hard">Hard</button>
+            </div>
+          </div>
+
+          <div class="practice-grid">
+            <div class="question-panel">
+              <div class="question-meta">
+                <span id="practiceLevelChip">Adaptive · Easy</span>
+                <span><span id="practiceCorrect">0</span> correct</span>
+              </div>
+              <h3 id="practiceQuestion">Press Start practice to generate your first question.</h3>
+              <div class="answer-row practice-answer-row">
+                <label class="sr-only" for="practiceAnswer">Practice answer</label>
+                <input id="practiceAnswer" type="text" inputmode="decimal" autocomplete="off" placeholder="x = ?" disabled>
+                <button class="btn btn-primary" id="practiceSubmit" type="button" disabled>Check</button>
+              </div>
+              <div class="feedback roomy" id="practiceFeedback" role="status" aria-live="polite"></div>
+              <button class="btn btn-plain" id="practiceStart" type="button">Start practice</button>
+            </div>
+
+            <aside class="mastery-panel">
+              <span class="tiny-label">CURRENT MASTERY</span>
+              <div class="mastery-ring" id="masteryRing" style="--mastery:0">
+                <span id="practiceMastery">0%</span>
+              </div>
+              <p id="practiceHint">Correct answers raise mastery. Incorrect answers are saved to your mistake book.</p>
+              <div class="streak-line"><span>Current run</span><strong id="practiceStreak">0</strong></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quiz" aria-labelledby="quizTitle">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">QUIZZER</p>
+          <h2 id="quizTitle">Prove you know it.</h2>
+          <p>Every run is regenerated. Perfect Run resets on one wrong answer; normal mode explains mistakes and keeps moving.</p>
+        </div>
+
+        <div class="quiz-builder reveal" id="quizBuilder">
+          <div class="builder-row">
+            <div class="builder-copy"><span class="tiny-label">TIER</span><strong>GCSE tier</strong></div>
+            <div class="segmented" id="tierTabs" data-liquid-tabs>
+              <button class="active" type="button" data-value="foundation">Foundation</button>
+              <button type="button" data-value="higher">Higher</button>
+            </div>
+          </div>
+          <div class="builder-row">
+            <div class="builder-copy"><span class="tiny-label">DIFFICULTY</span><strong>Question mix</strong></div>
+            <div class="segmented" id="quizDifficulty" data-liquid-tabs>
+              <button type="button" data-value="easy">Easy</button>
+              <button class="active" type="button" data-value="mixed">Mixed</button>
+              <button type="button" data-value="hard">Hard</button>
+            </div>
+          </div>
+          <div class="builder-row">
+            <div class="builder-copy"><span class="tiny-label">QUESTIONS</span><strong>Test length</strong></div>
+            <div class="segmented count-tabs" id="countTabs" data-liquid-tabs>
+              <button class="active" type="button" data-value="20">20</button>
+              <button type="button" data-value="30">30</button>
+              <button type="button" data-value="40">40</button>
+              <button type="button" data-value="50">50</button>
+            </div>
+          </div>
+          <div class="builder-row">
+            <div class="builder-copy"><span class="tiny-label">MODE</span><strong>How strict?</strong></div>
+            <div class="segmented" id="modeTabs" data-liquid-tabs>
+              <button class="active" type="button" data-value="normal">Normal</button>
+              <button type="button" data-value="perfect">Perfect Run</button>
+            </div>
+          </div>
+          <div class="builder-summary">
+            <div><span class="tiny-label">TRACK</span><strong>Maths · Algebra · Linear equations</strong></div>
+            <button class="btn btn-primary" id="startQuiz" type="button">Start quiz</button>
+          </div>
+        </div>
+
+        <div class="quiz-session" id="quizSession" hidden>
+          <div class="quiz-session-top">
+            <div>
+              <span class="tiny-label" id="quizModeLabel">NORMAL RUN</span>
+              <strong><span id="quizIndex">1</span> / <span id="quizTotal">20</span></strong>
+            </div>
+            <div class="quiz-score"><span>Score</span><strong id="quizScore">0</strong></div>
+          </div>
+          <div class="progress-track quiz-progress"><span id="quizProgressBar"></span></div>
+          <article class="quiz-question-card">
+            <div class="question-meta"><span id="quizDifficultyChip">Easy</span><span id="quizTypeChip">Typed answer</span></div>
+            <h3 id="quizQuestionText"></h3>
+            <div id="quizAnswerArea"></div>
+            <div class="feedback roomy" id="quizFeedback" role="status" aria-live="polite"></div>
+            <div class="quiz-actions">
+              <button class="btn btn-plain" id="quitQuiz" type="button">End quiz</button>
+              <button class="btn btn-primary" id="quizSubmit" type="button">Check answer</button>
+              <button class="btn btn-primary" id="quizNext" type="button" hidden>Next</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="quiz-results" id="quizResults" hidden>
+          <span class="eyebrow">RESULT</span>
+          <h3 id="resultHeadline">Nice run.</h3>
+          <p id="resultSummary"></p>
+          <div class="result-metrics">
+            <div><strong id="resultScore">0%</strong><span>Accuracy</span></div>
+            <div><strong id="resultCorrect">0/20</strong><span>Correct</span></div>
+            <div><strong id="resultMastery">0%</strong><span>Mastery</span></div>
+          </div>
+          <div class="hero-actions results-actions">
+            <button class="btn btn-primary" id="retryQuiz" type="button">New random run</button>
+            <button class="btn btn-plain" type="button" data-go="#progress">Review progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section progress-section" id="progress" aria-labelledby="progressTitle">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">PROGRESS</p>
+          <h2 id="progressTitle">See what changed.</h2>
+          <p>Completion, accuracy, mastery, and weak spots all come from your stored study activity on this device.</p>
+        </div>
+
+        <div class="progress-overview stagger">
+          <article class="progress-stat"><span>Track complete</span><strong id="progressCompletion">0%</strong><small id="progressCompletionSub">0 / 3 lessons</small></article>
+          <article class="progress-stat"><span>Quiz accuracy</span><strong id="progressAccuracy">—</strong><small id="progressAccuracySub">No quiz attempts yet</small></article>
+          <article class="progress-stat"><span>Mastery</span><strong id="progressMastery">0%</strong><small>Maths · Algebra</small></article>
+          <article class="progress-stat"><span>Study streak</span><strong id="progressStreak">0</strong><small>consecutive active days</small></article>
+        </div>
+
+        <div class="progress-columns">
+          <article class="roadmap-card reveal">
+            <div class="panel-heading"><div><span class="tiny-label">ROADMAP</span><h3>Linear equations</h3></div><span id="roadmapPercent">0%</span></div>
+            <div class="roadmap-list" id="roadmapList"></div>
+          </article>
+
+          <article class="history-card reveal">
+            <div class="panel-heading"><div><span class="tiny-label">QUIZ HISTORY</span><h3>Recent scores</h3></div></div>
+            <div class="score-chart" id="scoreChart" aria-label="Recent quiz scores"></div>
+            <p class="empty-note" id="scoreEmpty">Finish a quiz and your real scores will appear here.</p>
+          </article>
+        </div>
+
+        <div class="progress-columns lower-progress">
+          <article class="weak-card reveal">
+            <div class="panel-heading"><div><span class="tiny-label">WEAK AREAS</span><h3>What needs another pass</h3></div></div>
+            <div id="weakAreas" class="weak-list"></div>
+          </article>
+
+          <article class="activity-card reveal">
+            <div class="panel-heading"><div><span class="tiny-label">RECENT ACTIVITY</span><h3>Your study log</h3></div></div>
+            <div id="activityList" class="activity-list"></div>
+          </article>
+        </div>
+
+        <article class="mistake-book reveal" aria-labelledby="mistakeTitle">
+          <div class="panel-heading mistake-heading">
+            <div><span class="tiny-label">MISTAKE BOOK</span><h3 id="mistakeTitle">Wrong once. Useful forever.</h3><p>Incorrect practice and quiz questions are stored here so you can retry them instead of pretending they never happened.</p></div>
+            <button class="btn btn-plain small-btn" id="clearMistakes" type="button">Clear resolved</button>
+          </div>
+          <div id="mistakeList" class="mistake-list"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div><strong>Zouz</strong><span>Built as a complete first GCSE Maths track, ready to expand without turning into spaghetti.</span></div>
+      <button class="text-button" type="button" id="resetProgress">Reset local progress</button>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabs" id="mobileTabs" data-liquid-tabs aria-label="Mobile navigation">
+    <a class="active" href="#home"><span class="mobile-icon">⌂</span><span class="mobile-label">Home</span></a>
+    <a href="#learn"><span class="mobile-icon">◫</span><span class="mobile-label">Learn</span></a>
+    <a href="#practice"><span class="mobile-icon">↻</span><span class="mobile-label">Practice</span></a>
+    <a href="#quiz"><span class="mobile-icon">✓</span><span class="mobile-label">Quiz</span></a>
+    <a href="#progress"><span class="mobile-icon">⌁</span><span class="mobile-label">Progress</span></a>
+  </nav>
+
+  <div class="settings" id="settings" aria-hidden="true">
+    <button class="settings-bg" id="settingsCloseBg" type="button" tabindex="-1" aria-label="Close settings"></button>
+    <section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="sheet-head"><div><span class="tiny-label">APPEARANCE</span><h2 id="settingsTitle">Settings</h2></div><button class="icon-btn sheet-close" id="settingsClose" type="button" aria-label="Close settings">×</button></div>
+      <p>Choose how Zouz looks. Auto follows your device.</p>
+      <div class="segmented theme-tabs" id="themeTabs" data-liquid-tabs>
+        <button class="active" type="button" data-theme-choice="light">Light</button>
+        <button type="button" data-theme-choice="dark">Dark</button>
+        <button type="button" data-theme-choice="system">Auto</button>
+      </div>
+      <div class="settings-note"><strong>Progress stays local.</strong><span>This version saves study data in your browser. No account is required.</span></div>
+    </section>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+    <button class="search-bg" id="searchCloseBg" type="button" tabindex="-1" aria-label="Close search"></button>
+    <section class="search-panel" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 20-4.2-4.2m1.7-5.3a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+        <label class="sr-only" for="globalSearch">Search Zouz</label>
+        <input id="globalSearch" type="search" autocomplete="off" placeholder="Search lessons, concepts, formulas…">
+        <kbd>Esc</kbd>
+      </div>
+      <div class="search-results" id="searchResults">
+        <p class="search-hint" id="searchTitle">Try “balance”, “brackets”, “both sides”, or “quiz”.</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
